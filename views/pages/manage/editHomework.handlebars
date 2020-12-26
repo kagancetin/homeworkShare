@@ -1,0 +1,320 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Starter Page</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Starter Page</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <form class="form-horizontal" id="formAddHomework" action="/manage/editHomework/{{homework._id}}"
+                method="POST">
+                <div class="card card-info">
+
+                    <div class="card-header">
+                        <h4 class="card-title">Ödev Bilgileri</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Ödevin
+                                Adı</label>
+                            <input autocomplete="off" type="text" class="form-control" id="name" name="name"
+                                value="{{homework.name}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Açıklama</label>
+                            <textarea placeholder="Açıklama giriniz" id="description" name="description"
+                                class="form-control">{{homework.description}}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Ödevin Son Tarihi</label>
+                            <div class="input-group">
+                                <input value="{{homework.lastDate}}" type="text" class="form-control" name="lastDate"
+                                    id="lastDate">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-primary">Değiştir</button>
+                            <span data-toggle="modal" data-target="#removeHomework">
+                                <button type="button" class="btn btn-danger">Ödevi Sil</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+            <div class="modal fade" id="removeHomework" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true ">
+                <div class="modal-dialog" role="document ">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Kullanıcıyı Sil</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true ">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{homework.name}} isimli ödevi silmek istediğinize emin
+                                misiniz?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">
+                                İptal
+                            </button>
+                            <form class="form-horizontal" method="post"
+                                action="/manage/removeHomework/{{homework._id}}">
+                                <button type="Submit" class="btn btn-primary">Eminim</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="card card-info">
+                <div class="card-header">
+                    <h5 class="card-title m-b-0">Ödev Dosyaları</h5>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-hover text-nowrap">
+                        <tbody id="documentList">
+                            {{#if homework.document}}
+                            {{#each homework.document}}
+                            <tr class="d-flex">
+                                <td style="border:none" class="col-10">{{name}}</td>
+                                <td style="border:none" class="col-2 text-right" scope="col">
+                                    <a href="{{path}}" download data-toggle="tooltip" data-placement="top" title=""
+                                        data-original-title="İndir">
+                                        <i class="m-r-10 fas fa-download mx-1"></i>
+                                    </a>
+                                    <a href="/manage/manageHomework/removeDocumentHomework/{{../homework._id}}/{{_id}}"
+                                        data-toggle="tooltip" data-placement="top" title=""
+                                        data-original-title="Dökümanı Sil">
+                                        <i class="m-r-10 fas fa-trash mx-1"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {{/each}}
+                            {{/if}}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+
+            <div class="card card-info">
+                <div class="card-header">
+                    <h5 class="card-title m-b-0">Ödev Dosyası Yükleme</h5>
+                </div>
+                <div class="card-body" id="previews">
+                    <div id="actions" class="card-body">
+                        <span class="btn btn-success fileinput-button dz-clickable">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Dosya Ekle</span>
+                        </span>
+                        <button type="submit" class="btn btn-primary start">
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>Bütün Dosyaları Yükle</span>
+                        </button>
+                        <button type="reset" class="btn btn-warning cancel">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>Tümünü İptal Et</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div style="display: none;" id="previewTemplate">
+                    <div
+                        class="d-flex justify-content-between border-top border-secondary align-items-center py-1 px-3">
+                        <div class="w-25">
+                            <a class="name" data-dz-name></a>
+                            <div><small class="size" data-dz-size></small></div>
+                        </div>
+                        <div class="w-50">
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-green" role="progressbar" data-dz-uploadprogress
+                                    aria-volumemin="0" aria-volumemax="100">
+                                </div>
+                            </div>
+                            <small class="dz-error-message text-danger" data-dz-errormessage></small>
+                        </div>
+                        <div class="w-25 text-right">
+                            <button class="btn btn-success btn-sm start">
+                                <i class="glyphicon glyphicon-upload"></i>
+                                <span>Başla</span>
+                            </button>
+                            <button data-dz-remove class="btn btn-danger btn-sm cancel">
+                                <i class="glyphicon glyphicon-ban-circle"></i>
+                                <span>İptal Et</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{#if homework.downloader}}
+            <div class="card card-info">
+                <div class="card-header">
+                    <h5 class="card-title m-b-0">Ödevi İndiren Öğrenciler</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="thead-light">
+
+                                <tr class="d-flex">
+                                    <th style="border-bottom:none;border-top:none" class="col-6">Adı</th>
+                                    <th style="border-bottom:none;border-top:none" class="col-3">Ödevi İndirme Tarihi
+                                    </th>
+                                    <th style="border-bottom:none;border-top:none" class="col-3">Ödevi Tamamlama Tarihi
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="" class="customtable">
+                                {{#each homework.downloader}}
+                                <tr class="d-flex">
+                                    <td class="col-6">{{user.username}}</td>
+                                    <td class="col-3">{{downloadDate}}</td>
+
+                                    <td class="col-3">{{#if done}}{{done}}{{else}}Tamamlanmadı{{/if}}</td>
+
+                                </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+        </div>
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{{> _footer}}
+
+
+
+{{#section 'link'}}
+<link href="/plugins/dropzone/dist/min/basic.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+<link href="/dist/css/upload.css" rel="stylesheet">
+{{/section}}
+
+{{#section 'script'}}
+<script src="/plugins/dropzone/dist/dropzone.js"></script>
+<script src="/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="/plugins/bootstrap-datepicker/dist/locales/bootstrap-datepicker.tr.min.js"></script>
+
+<script>
+    jQuery('#lastDate').datepicker({
+        language: 'tr',
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        todayHighlight: true,
+    });
+
+    let previewTemplate = document.getElementById('previewTemplate').innerHTML;
+
+    var myDropzone = new Dropzone(document.body, { // Make the whole body a dropzone
+        url: "/manage/manageHomework/uploadDocumentHomework/{{homework._id}}", // Set the url
+        thumbnailWidth: 80,
+        thumbnailHeight: 80,
+        parallelUploads: 20,
+        previewTemplate: previewTemplate,
+        autoQueue: false, // Make sure the files aren't queued until manually added
+        previewsContainer: "#previews", // Define the container to display the previews
+        clickable: ".fileinput-button", // Define the element that should be used as click trigger to select files.
+        ///turkish
+        dictDefaultMessage: 'Yüklemek istediğiniz dosyaları buraya bırakın',
+        dictFallbackMessage: "Tarayıcınız sürükle bırak yüklemelerini desteklemiyor",
+        dictFileTooBig: "Dosya boyutu çok büyük. Yükleyebileceğiniz en büyük dosya boyutu: 128 Mb.",
+        dictInvalidFileType: "Bu tür dosyaları yükleyemezsiniz",
+        dictResponseError: "Sunucu hatası.",
+        dictCancelUpload: "Yüklemeyi İptal Et",
+        dictUploadCanceled: "Yükleme iptal edildi",
+        dictCancelUploadConfirmation: "Bu yüklemeyip iptal etmek istediğinizden emin misiniz ?",
+        dictRemoveFile: "Dosyayı Sil",
+        dictMaxFilesExceeded: "Başka dosya yükleyemezsiniz.",
+        maxFilesize: 128, // MB
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        myDropzone.on("addedfile", function (file) {
+            // Hookup the start button
+            file.previewElement.querySelector(".start").onclick = function () { myDropzone.enqueueFile(file); };
+        });
+
+        myDropzone.on("sending", function (file) {
+            // And disable the start button
+            file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+        });
+
+        myDropzone.on("success", function (file, response) {
+            if (response.data) {
+                toastr.success(response.message, 'Başarılı');
+                var documentList = document.getElementById("documentList");
+                documentList.innerHTML += '<tr class="d-flex">\
+                                            <td style="border:none" class="col-10">'+ response.data.document[response.data.document.length - 1].name + '</td>\
+                                            <td style="border:none" class="col-2 text-right" scope="col">\
+                                                <a href="'+ response.data.document[response.data.document.length - 1].path + '" download data-toggle="tooltip" data-placement="top" title=""\
+                                                    data-original-title="İndir">\
+                                                    <i class="m-r-10 fas fa-download mx-1"></i>\
+                                                </a>\
+                                                <a href="/manage/manageHomework/removeDocumentHomework/'+ response.data._id + '/' + response.data.document[response.data.document.length - 1]._id + '"\
+                                                    data-toggle="tooltip" data-placement="top" title=""\
+                                                    data-original-title="Dökümanı Sil">\
+                                                    <i class="m-r-10 fas fa-trash mx-1"></i>\
+                                                </a>\
+                                            </td>\
+                                        </tr>';
+            }
+            else {
+                toastr.error(response.message, "Hata");
+            }
+        });
+
+        // Setup the buttons for all transfers
+        // The "add files" button doesn't need to be setup because the config
+        // `clickable` has already been specified.
+        document.querySelector("#actions .start").onclick = function () {
+            myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+        };
+        document.querySelector("#actions .cancel").onclick = function () {
+            myDropzone.removeAllFiles(true);
+        };
+    });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+
+
+</script>
+
+{{/section}}

@@ -1,0 +1,182 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Starter Page</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Starter Page</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <div class="col-md-12 text-right">
+                        <a href="/manage/addHomework" type="button" class="btn btn-primary btn-sm margin-5">
+                            Ödev Ekle
+                        </a>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    {{#if homeworks}}
+                    <table id="homeworksTable" class="table table-bordered table-hover projects">
+                        <thead>
+                            <tr>
+                                <th class="text-center">
+                                    Ödev Sahibi
+                                </th>
+                                <th class="text-center">
+                                    Ödev Adı ve Açıklaması
+                                </th>
+                                <th class="text-center">
+                                    Ödev Tarihi
+                                </th>
+                                <th class="text-center">
+                                    Son Teslim Tarihi
+                                </th>
+                                <th>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each homeworks}}
+                            <tr>
+                                <td>
+                                    <div class="d-flex justify-content-center align-items-center h-100">
+                                        <img alt="Avatar" class="table-avatar" src="{{uploader.profilPhoto}}">
+                                        <span class="pl-2">{{uploader.fullName}}</span>
+                                    </div>
+
+                                </td>
+                                <td>
+                                    <p class="mb-0">{{name}}</p>
+                                    <small>{{description}}</small>
+                                </td>
+                                <td class="text-center">
+                                    {{uploadDate}}
+                                </td>
+                                <td class="text-center">
+                                    {{lastDate}}
+                                </td>
+                                <td class="project-actions text-center">
+                                    <a href="/manage/editHomework/{{_id}}" type="button"
+                                        class="btn btn-primary btn-sm">Ödevi Düzenle</a>
+                                    <a href="/manage/hideHomework/{{_id}}" type="button"
+                                        class="btn btn-warning btn-sm">{{#if hide}}Gizliliği Kaldır{{else}}Ödevi
+                                        Gizle{{/if}}</a>
+
+                                    <span data-toggle="modal" data-target="#removeHomework{{_id}}">
+                                        <a style="color: #fff;" type="button" class="btn btn-danger btn-sm">Ödevi
+                                            Sil</a>
+                                    </span>
+
+                                    <div class="modal fade" id="removeHomework{{_id}}" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true ">
+                                        <div class="modal-dialog" role="document ">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Kullanıcıyı
+                                                        Sil
+                                                    </h5>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true ">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body text-left">
+                                                    <p>{{name}} isimli ödevi silmek istediğinize emin
+                                                        misiniz?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        İptal
+                                                    </button>
+                                                    <form class="form-horizontal" method="post"
+                                                        action="/manage/removeHomework/{{_id}}">
+                                                        <button type="Submit" class="btn btn-primary">Eminim</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+
+                    </table>
+                    {{else}}
+                    <p>Ödev bulunmamaktadır.</p>
+                    {{/if}}
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{{> _footer}}
+
+
+{{#section 'link'}}
+<link href="/plugins/dropzone/dist/min/basic.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+{{/section}}
+
+{{#section 'style'}}
+<link href="/dist/css/upload.css" rel="stylesheet">
+{{/section}}
+
+
+
+{{#section 'script'}}
+
+<script src="/plugins/dropzone/dist/dropzone.js"></script>
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+    $(function () {
+        $('#homeworksTable').DataTable({
+            "aaSorting": [],
+            "columnDefs": [
+                { "bSortable": false, "aTargets": [4] }
+            ],
+            "language": {
+                "sProcessing": "İşleniyor...",
+                "sLengthMenu": "Sayfada _MENU_ Kayıt Göster",
+                "sZeroRecords": "Eşleşen Kayıt Bulunmadı",
+                "sInfo": "  _TOTAL_ Kayıttan _START_ - _END_ Arası Kayıtlar",
+                "sInfoEmpty": "Kayıt Yok",
+                "sInfoFiltered": "( _MAX_ Kayıt İçerisinden Bulunan)",
+                "sInfoPostFix": "",
+                "sSearch": "Bul:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "İlk",
+                    "sPrevious": "Önceki",
+                    "sNext": "Sonraki",
+                    "sLast": "Son"
+                }
+            }
+        });
+    });
+</script>
+{{/section}}

@@ -1,0 +1,186 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Starter Page</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Starter Page</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="card-body">
+
+                <h5 class="card-title">Kullanıcı Listesi</h5>
+
+                <div class="table-responsive">
+                    <table id="userList" class="table table-bordered">
+                        <thead>
+
+                            <tr>
+                                <th style="border-bottom:none;border-top:none"></th>
+                                <th style="border-bottom:none;border-top:none">İsim</th>
+                                <th style="border-bottom:none;border-top:none">E-Mail</th>
+                                <th style="border-bottom:none;border-top:none">Telefon No</th>
+                                <th style="border-bottom:none;border-top:none">Kullanıcı Adı</th>
+                                <th style="border-bottom:none;border-top:none">Kullanıcı Tipi</th>
+                                <th style="border-bottom:none;border-top:none">Son Giriş</th>
+                                <th style="border-bottom:none;border-top:none">İşlemler</th>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            {{#each allUsers}}
+                            <tr>
+                                <td>
+                                    <a href="/users/profile/{{this.username}}">
+                                        <div class="logo-container" style="width:40px">
+                                            <img src="{{this.profilPhoto}}" alt="user" class="">
+                                        </div>
+                                    </a>
+                                </td>
+                                <td><a href="/users/profile/{{this.username}}">{{this.fullName}}</a></td>
+                                <td>{{this.email}}</td>
+                                <td>{{this.phoneNumber}}</td>
+                                <td>{{this.username}}</td>
+                                <td>
+                                    {{#ifCond this.type '==' 0}}
+                                    Yönetici
+                                    {{/ifCond}}
+                                    {{#ifCond this.type '==' 1}}
+                                    Öğrenci
+                                    {{/ifCond}}
+                                </td>
+                                <td>eklenecek</td>
+                                <td>
+                                    {{#unless this.superAdmin }}
+                                    {{#ifCond ../userActive.username '!=' this.username }}
+                                    {{> actions data=../this}}
+                                    {{else}}
+                                    {{#ifCond userType '==' 0}}
+                                    {{> actions data=../this}}
+                                    {{/ifCond}}
+                                    {{/ifCond}}
+                                    {{/unless}}
+
+
+                                </td>
+                            </tr>
+                            {{/each}}
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</div>
+
+
+{{#*inline 'actions'}}
+<span data-toggle="modal" data-target="#resPassUser{{data._id}}">
+    <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Şifre Sıfırla"
+        onclick="generatePassword('{{data._id}}')">
+        <i class="m-r-10 fas fa-key mx-1"></i>
+    </a>
+</span>
+<span data-toggle="modal" data-target="#updateUser{{data._id}}">
+    <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Düzenle">
+        <i class="m-r-10 fas fa-pencil-alt mx-1"></i>
+    </a>
+</span>
+<span data-toggle="modal" data-target="#removeUser{{data._id}}">
+    <a data-toggle="tooltip" data-placement="top" title="" data-original-title="Sil">
+        <i class="m-r-10 fas fa-trash mx-1"></i>
+    </a>
+</span>
+
+{{> user/_userProfileResetPasswordModal userInfo=data _id=data._id}}
+{{> user/_userProfileUpdateModal userInfo=data _id=data._id}}
+{{> user/_userProfileRemoveModal userInfo=data _id=data._id}}
+
+
+
+{{/inline}}
+
+
+
+
+{{> _footer}}
+
+
+
+
+
+
+{{#section 'link'}}
+<link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+{{/section}}
+
+{{#section 'script'}}
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script>
+    /****************************************
+     *       Basic Table                   *
+     ****************************************/
+    $('#userList').DataTable(
+        {
+            "aaSorting": [],
+            "columnDefs": [
+                { "bSortable": false, "aTargets": [0, 6, 7] }
+            ],
+            "language": {
+                "sProcessing": "İşleniyor...",
+                "sLengthMenu": "Sayfada _MENU_ Kayıt Göster",
+                "sZeroRecords": "Eşleşen Kayıt Bulunmadı",
+                "sInfo": "  _TOTAL_ Kayıttan _START_ - _END_ Arası Kayıtlar",
+                "sInfoEmpty": "Kayıt Yok",
+                "sInfoFiltered": "( _MAX_ Kayıt İçerisinden Bulunan)",
+                "sInfoPostFix": "",
+                "sSearch": "Bul:",
+                "sUrl": "",
+                "oPaginate": {
+                    "sFirst": "İlk",
+                    "sPrevious": "Önceki",
+                    "sNext": "Sonraki",
+                    "sLast": "Son"
+                }
+            }
+        }
+    );
+
+    function generatePassword(id) {
+        var result = '';
+        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        var newPassword = document.getElementById('newPassword' + id);
+        for (var i = 0; i < 6; i++) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        newPassword.value = result;
+
+
+    }
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+
+</script>
+{{/section}}

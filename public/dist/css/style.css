@@ -1,0 +1,79 @@
+.logo-container {
+  position: relative;
+
+  margin: auto;
+}
+.logo-container:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */
+}
+
+.logo-container img {
+  position: absolute; /* Take your picture out of the flow */
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0; /* Make the picture taking the size of it's parent */
+  width: 100%; /* This if for the object-fit */
+  height: 100%; /* This if for the object-fit */
+  object-fit: cover; /* Equivalent of the background-size: cover; of a background-image */
+  object-position: center;
+  border-radius: 50%;
+}
+p input {
+  border: none;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  padding: none;
+  width: auto;
+  color: #3e5569;
+  font-weight: bold;
+}
+p input:focus {
+  outline: none;
+}
+
+.custom-control-label {
+  font-weight: 400 !important;
+}
+
+.homework-block .homework-dates {
+  display: inline;
+  margin-left: 10px;
+}
+
+.homework-done {
+  color: #6c757d;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.div-table {
+  display: table;
+  width: 100%;
+  background-color: #fff;
+}
+.div-tr {
+  display: table-row;
+}
+.div-th,
+.div-td {
+  display: table-cell;
+  padding: 8px 15px;
+  border-bottom: 1px solid #eaeff0;
+  vertical-align: middle;
+}
+.div-thead {
+  display: table-header-group;
+  font-weight: bold;
+}
+.div-tfoot {
+  display: table-footer-group;
+  font-weight: bold;
+  background-color: #fff;
+}
+.div-tbody {
+  display: table-row-group;
+}

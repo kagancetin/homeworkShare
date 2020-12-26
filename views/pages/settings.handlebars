@@ -1,0 +1,196 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Starter Page</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Starter Page</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Bilgilerimi Güncelle</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form role="form" method="post" action="/users/updateInfo/{{userActive._id}}?ref=settings">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="fullName">Ad Soyad</label>
+                                    <input type="text" class="form-control" id="fullName" name="fullName"
+                                        value="{{data.fullName}}" placeholder="Ad soyad">
+                                </div>
+                                <div class="form-group">
+                                    <label for="username">Kullanıcı
+                                        Adı</label>
+                                    <input type="text" class="form-control" id="username" name="username"
+                                        value="{{data.username}}" placeholder="Kullanıcı Adı">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">E-mail</label>
+                                    <input type="text" class="form-control" id="email" name="email"
+                                        value="{{data.email}}" placeholder="E-mail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="phoneNumber">Telefon
+                                        Numarası</label>
+                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                                        value="{{data.phoneNumber}}" placeholder="Telefon Numarası">
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#passcheck">Bilgilerimi Güncelle</button>
+                            </div>
+                            <div class="modal fade" id="passcheck" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true ">
+                                <div class="modal-dialog" role="document ">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Bilgilerinizi
+                                                güncelliyorsunuz!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true ">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Bilgilerinizi güncellemek istediğinizden emin misiniz?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="Submit" class="btn btn-primary">Bilgilerimi Güncelle</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card card-danger">
+                        <div class="card-header">
+                            <h3 class="card-title">Şifremi Değiştir</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form role="form" method="post" action="/users/updatePassword">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="newPassword">Yeni
+                                        Şifre</label>
+                                    <input type="password" class="form-control" id="newPassword" name="newPassword"
+                                        placeholder="Yeni Şifre">
+                                </div>
+                                <div class="form-group">
+                                    <label for="renewPassword">Yeni
+                                        Şifre
+                                        Doğrulama</label>
+                                    <input type="password" class="form-control" id="renewPassword" name="renewPassword"
+                                        placeholder="Yeni Şifre Doğrulama">
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-danger" data-toggle="modal"
+                                    data-target="#updatePassword">Şifremi Değiştir</button>
+                            </div>
+                            <div class="modal fade" id="updatePassword" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true ">
+                                <div class="modal-dialog" role="document ">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Emin misiniz?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true ">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Güvenliğiniz için doğrulama yapmak zorundayız.</p>
+
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                placeholder="Şifrenizi giriniz.">
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                aria-label="Close">
+                                                İptal
+                                            </button>
+                                            <button type="Submit" class="btn btn-danger">Eminim</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.col-md-6 -->
+                <div class="col-md-6 col-sm-12">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Profil Resmimi Değiştir</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form role="form" enctype="multipart/form-data" method="post" action="/users/updateProfilPhoto">
+                            <div class="card-body">
+                                <div class="p-3 text-center">
+                                    <div class="logo-container" style="max-width:250px;">
+                                        <img src="{{data.profilPhoto}}" alt="" class="img-circle img-fluid">
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <label for="file">Yeni Profil
+                                        Resmi</label>
+                                    <div class="custom-file">
+                                        <input name="file" type="file" class="custom-file-input" accept="image/*"
+                                            id="file">
+                                        <label class="custom-file-label" for="file">Resim Seç</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Profil Resmimi Değiştir</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- /.col-md-6 -->
+            </div>
+            <!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>
+
+{{> _footer}}
+
+
+{{#section 'script'}}
+<script src="/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        bsCustomFileInput.init();
+    });
+</script>
+{{/section}}

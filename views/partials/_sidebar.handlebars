@@ -1,0 +1,101 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="/" class="brand-link">
+        <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+        <span class="brand-text font-weight-light">AdminLTE 3</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <div class="logo-container" style="width: 34px;">
+                    <img src="{{userActive.profilPhoto}}" alt="" class="img-circle elevation-2">
+                </div>
+            </div>
+            <div class="info">
+                <a href="/users/profile/{{userActive.username}}" class="d-block">{{userActive.fullName}}</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                <li class="nav-item">
+                    <a href="/homeworks" class="nav-link">
+                        <i class="nav-icon fas fa-edit"></i>
+                        <p>Ödevler</p>
+                    </a>
+                </li>
+                {{#ifCond userType '==' 0}}
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users"></i>
+                        <p>Kullanıcı İşlemleri<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/users" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kullanıcılar</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/users/userAdd" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kullanıcı Ekle</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-university"></i>
+                        <p>Öğretmen İşlemleri<i class="right fas fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/manage/manageHomework" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ödevleri Yönet</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/manage/addHomework" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ödev Ekle</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/manage/analysisUser" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Öğrenci Analizleri</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                {{/ifCond}}
+                <li class="nav-item">
+                    <a href="/settings" class="nav-link">
+                        <i class="nav-icon fa fa-cog"></i>
+                        <p>Ayarlar</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/logout" class="nav-link">
+                        <i class="nav-icon fa fa-power-off"></i>
+                        <p>Güvenli Çıkış</p>
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

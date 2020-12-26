@@ -1,0 +1,87 @@
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Starter Page</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Starter Page</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <form class="form-horizontal" id="formAddHomework" action="/manage/addHomework" method="POST">
+                    <div class="card-header">
+                        <h4 class="card-title">Ödev Bilgileri</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="name">Ödevin
+                                Adı</label>
+                            <input autocomplete="off" type="text" class="form-control" id="name" name="name"
+                                placeholder="Ödevin Adı">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Açıklama</label>
+                            <textarea placeholder="Açıklama giriniz" id="description" name="description"
+                                class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Ödevin Son Tarihi</label>
+                            <div class="input-group">
+                                <input autocomplete="off" type="text" class="form-control" name="lastDate"
+                                    id="lastDate">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-primary">Kaydet</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+{{> _footer}}
+
+
+{{#section 'link'}}
+<link rel="stylesheet" type="text/css" href="/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+{{/section}}
+
+{{#section 'script'}}
+<script src="/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="/plugins/bootstrap-datepicker/dist/locales/bootstrap-datepicker.tr.min.js"></script>
+
+<script>
+    jQuery('#lastDate').datepicker({
+        language: 'tr',
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        todayHighlight: true,
+    });
+
+
+</script>
+{{/section}}
